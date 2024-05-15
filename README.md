@@ -7,8 +7,9 @@ curl -sfL https://raw.githubusercontent.com/mutawadhialfajri17/promo-dev-kit/mai
 
 Development Kit List :
 - git
-- go
+- golang
+- makefile
 - gcloud
-- protoc
+- proto
 - nsq
 - redis
