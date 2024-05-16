@@ -1,12 +1,9 @@
 # !/bin/bash
 
 # request admin permissions
-if [ "$EUID" -ne 0 ]; then
-    echo "This script requires admin privileges. Trying to gain root permissions..."
-    # Re-run the script with sudo
-    sudo bash "$0" "$@"
-    exit $?
-fi
+echo "This script requires admin privileges. Trying to gain root permissions..."
+# set credentials admin temporary
+sudo echo
 
 is_kit_installed() {
     if command -v $1 >/dev/null 2>&1; then
@@ -35,6 +32,13 @@ fi
 if ! is_kit_installed "go" ; then
     echo "========== Installing Go 1.22 🔗 =========="
     brew install go@1.22
+
+    # set GOPRIVATE
+    go env -w GOPRIVATE=github.com/tokopedia
+
+    # set GOARCH
+    go env -w GOARCH=amd64
+
     echo "========== Install Go 1.22 is Complete 🔗 =========="
 fi
 
@@ -69,14 +73,13 @@ if ! is_kit_installed "protoc" ; then
     go install github.com/golang/protobuf/protoc-gen-go@v1.0.0
     
     # fixing issue protobuf timestamp
-    user=$(whoami)
-    include_folder_path="/usr/local/include"
-    if [ ! -d "$include_folder_path" ]; then
-        echo "$include_folder_path is not exist"
+    INCLUDE_FOLDER_PATH="/usr/local/include"
+    if [ ! -d "$INCLUDE_FOLDER_PATH" ]; then
+        echo "$INCLUDE_FOLDER_PATH is not exist"
         exit 1
     fi
-    folder_owner=$(ls -ld $include_folder_path | awk '{print $3}')
-    sudo chown -R $user $include_folder_path
+    folder_owner=$(ls -ld $INCLUDE_FOLDER_PATH | awk '{print $3}')
+    sudo chown -R $USER $INCLUDE_FOLDER_PATH
 
     echo "========== Install Protoc is Complete 🍭 =========="
 fi
@@ -96,32 +99,34 @@ if ! is_kit_installed "redis-server" ; then
     echo "========== Install Redis is Complete 📦 =========="
 fi
 
-# zsh: fixing export and re-compile 
+# zsh: fixing config and re-compile 
 if is_kit_installed "zsh" ; then
     echo "========== Adding export binary to Zsh 🎀 =========="
-    zshrc_path="~/.zshrc"
+
+    ZSHRC_PATH="$HOME/.zshrc"
+
+    # Check if the .zshrc file exists
+    if [ ! -f "$ZSHRC_PATH" ]; then
+        echo "Error: .zshrc file not found at $ZSHRC_PATH"
+        exit 1
+    fi
 
     # export homebrew
-    if ! grep -q 'PATH=/opt/homebrew/bin:$PATH' ~/.zshrc; then
-        echo 'export PATH=/opt/homebrew/bin:$PATH' >> ~/.zshrc
+    if ! grep -q 'PATH=/opt/homebrew/bin:$PATH' $ZSHRC_PATH; then
+        echo 'export PATH=/opt/homebrew/bin:$PATH' >> $ZSHRC_PATH
     fi
 
     # export go_path
-    if ! grep -q 'GOPATH=$HOME/go' ~/.zshrc; then
-        echo 'export GOPATH=$HOME/go' >> ~/.zshrc
+    if ! grep -q 'GOPATH=$HOME/go' $ZSHRC_PATH; then
+        echo 'export GOPATH=$HOME/go' >> $ZSHRC_PATH
     fi
 
     # add go_path in path
-    if ! grep -q 'PATH=$PATH:$GOPATH/bin' ~/.zshrc; then
-        echo 'export PATH=$PATH:$GOPATH/bin' >> ~/.zshrc
+    if ! grep -q 'PATH=$PATH:$GOPATH/bin' $ZSHRC_PATH; then
+        echo 'export PATH=$PATH:$GOPATH/bin' >> $ZSHRC_PATH
     fi
 
-    # export others go lib binary
-    if ! grep -q 'PATH=$PATH:/usr/local/go/bin' ~/.zshrc; then
-        echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.zshrc
-    fi
-
-    compile ~/.zshrc
+    zsh -c "source $ZSHRC_PATH"
     echo "========== Add export binary to Zsh is Complete 🎀 =========="
 fi
 
