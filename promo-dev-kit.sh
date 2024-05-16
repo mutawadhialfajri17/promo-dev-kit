@@ -2,7 +2,7 @@
 
 # request admin permissions
 echo "This script requires admin privileges. Trying to gain root permissions..."
-# set credentials admin temporary
+# set temporary credentials admin
 sudo echo
 
 is_kit_installed() {
@@ -97,6 +97,13 @@ if ! is_kit_installed "redis-server" ; then
     brew install redis
     brew services start redis
     echo "========== Install Redis is Complete 📦 =========="
+fi
+
+# install: mockgen
+if ! is_kit_installed "mockgen" ; then
+    echo "========== Installing Mockgen 🎭 =========="
+    go install github.com/golang/mock/mockgen@v1.6.0
+    echo "========== Install Mockgen is Complete 🎭 =========="
 fi
 
 # zsh: fixing config and re-compile 

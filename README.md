@@ -13,3 +13,4 @@ Development Kit List :
 - proto
 - nsq
 - redis
+- mockgen
