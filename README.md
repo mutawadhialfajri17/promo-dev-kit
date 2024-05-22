@@ -14,3 +14,5 @@ Development Kit List :
 - nsq
 - redis
 - mockgen
+- vscode
+- postman

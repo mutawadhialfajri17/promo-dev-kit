@@ -18,14 +18,14 @@ is_kit_installed() {
 if ! is_kit_installed "brew" ; then
     echo "========== Installing Brew 🛠️ =========="
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    echo "========== Install Brew is Complete 🛠️ =========="
+    echo "========== Successfully Installed Brew 🛠️ =========="
 fi
 
 # install: git
 if ! is_kit_installed "git" ; then
     echo "========== Installing Git 🪄 =========="
     brew install git
-    echo "========== Install Git is Complete 🪄 =========="
+    echo "========== Successfully Installed Git 🪄 =========="
 fi
 
 # install: golang
@@ -39,14 +39,14 @@ if ! is_kit_installed "go" ; then
     # set GOARCH
     go env -w GOARCH=amd64
 
-    echo "========== Install Go 1.22 is Complete 🔗 =========="
+    echo "========== Successfully Installed Go.1.20 🔗 =========="
 fi
 
 # install: make
 if ! is_kit_installed "make" ; then
     echo "========== Installing Make 🔌 =========="
     brew install make
-    echo "========== Install Make is Complete 🔌 =========="
+    echo "========== Successfully Installed Make 🔌 =========="
 fi
 
 # install: gcloud
@@ -54,7 +54,7 @@ if ! is_kit_installed "gcloud" ; then
     echo "========== Installing Gcloud 🚀 =========="
     curl https://sdk.cloud.google.com | bash
     exec -l $SHELL
-    echo "========== Install Gcloud is Complete 🚀 =========="
+    echo "========== Successfully Installed Gcloud 🚀 =========="
 fi
 
 # install: protoc
@@ -81,14 +81,14 @@ if ! is_kit_installed "protoc" ; then
     folder_owner=$(ls -ld $INCLUDE_FOLDER_PATH | awk '{print $3}')
     sudo chown -R $USER $INCLUDE_FOLDER_PATH
 
-    echo "========== Install Protoc is Complete 🍭 =========="
+    echo "========== Successfully Installed Protoc 🍭 =========="
 fi
 
 # install: nsq
 if ! is_kit_installed "nsqd" ; then
     echo "========== Installing NSQ 📨 =========="
     brew install nsq
-    echo "========== Install NSQ is Complete 📨 =========="
+    echo "========== Successfully Installed NSQ 📨 =========="
 fi
 
 # install: redis
@@ -96,14 +96,14 @@ if ! is_kit_installed "redis-server" ; then
     echo "========== Installing Redis 📦 =========="
     brew install redis
     brew services start redis
-    echo "========== Install Redis is Complete 📦 =========="
+    echo "========== Successfully Installed Redis 📦 =========="
 fi
 
 # install: mockgen
 if ! is_kit_installed "mockgen" ; then
     echo "========== Installing Mockgen 🎭 =========="
     go install github.com/golang/mock/mockgen@v1.6.0
-    echo "========== Install Mockgen is Complete 🎭 =========="
+    echo "========== Successfully Installed Mockgen 🎭 =========="
 fi
 
 # zsh: fixing config and re-compile 
@@ -134,7 +134,21 @@ if is_kit_installed "zsh" ; then
     fi
 
     zsh -c "source $ZSHRC_PATH"
-    echo "========== Add export binary to Zsh is Complete 🎀 =========="
+    echo "========== Successfully Added export binary to Zsh 🎀 =========="
+fi
+
+# install: vscode
+ if [ ! -d "/Applications/Visual Studio Code.app" ] && [ ! -d "$HOME/Applications/Visual Studio Code.app" ]; then
+    echo "========== Installing Visual Studio Code 💻 =========="
+    brew install --cask visual-studio-code
+    echo "========== Successfully Installed Visual Studio Code 💻 =========="
+fi
+
+# install: postman
+if [ ! -d "/Applications/Postman.app" ] && [ ! -d "$HOME/Applications/Postman.app" ]; then
+    echo "========== Installing Visual Studio Code ☎️ =========="
+    brew install --cask postman
+    echo "========== Successfully Installed Visual Studio Code ☎️ =========="
 fi
 
 echo "========== Happy Dev 😁 =========="
