@@ -7,7 +7,7 @@ curl -sfL https://raw.githubusercontent.com/mutawadhialfajri17/promo-dev-kit/mai
 
 Development Kit List :
 - git
-- golang
+- golang 1.20
 - makefile
 - gcloud
 - proto

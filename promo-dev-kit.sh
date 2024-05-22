@@ -2,7 +2,7 @@
 
 # request admin permissions
 echo "This script requires admin privileges. Trying to gain root permissions..."
-# set temporary credentials admin
+# set admin credentials temporary
 sudo echo
 
 is_kit_installed() {
@@ -31,7 +31,7 @@ fi
 # install: golang
 if ! is_kit_installed "go" ; then
     echo "========== Installing Go 1.22 🔗 =========="
-    brew install go@1.22
+    brew install go@1.20
 
     # set GOPRIVATE
     go env -w GOPRIVATE=github.com/tokopedia
