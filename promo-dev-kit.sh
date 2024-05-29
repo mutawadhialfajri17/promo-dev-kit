@@ -151,4 +151,11 @@ if [ ! -d "/Applications/Postman.app" ] && [ ! -d "$HOME/Applications/Postman.ap
     echo "========== Successfully Installed Visual Studio Code ☎️ =========="
 fi
 
+# install: dbeaver
+if [ ! -d "/Applications/DBeaver.app" ] && [ ! -d "$HOME/Applications/DBeaver.app" ]; then
+    echo "========== Installing DBeaver 💾 =========="
+    brew install --cask dbeaver-community
+    echo "========== Successfully Installed DBeaver 💾 =========="
+fi
+
 echo "========== Happy Dev 😁 =========="

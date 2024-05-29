@@ -16,3 +16,4 @@ Development Kit List :
 - mockgen
 - vscode
 - postman
+- dbeaver
