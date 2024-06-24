@@ -30,7 +30,7 @@ fi
 
 # install: golang
 if ! is_kit_installed "go" ; then
-    echo "========== Installing Go 1.22 🔗 =========="
+    echo "========== Installing Go 1.20 🔗 =========="
     brew install go@1.20
 
     # set GOPRIVATE
@@ -78,7 +78,6 @@ if ! is_kit_installed "protoc" ; then
         echo "$INCLUDE_FOLDER_PATH is not exist"
         exit 1
     fi
-    folder_owner=$(ls -ld $INCLUDE_FOLDER_PATH | awk '{print $3}')
     sudo chown -R $USER $INCLUDE_FOLDER_PATH
 
     echo "========== Successfully Installed Protoc 🍭 =========="
