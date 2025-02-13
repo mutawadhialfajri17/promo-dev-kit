@@ -18,6 +18,7 @@ is_kit_installed() {
 if ! is_kit_installed "brew" ; then
     echo "========== Installing Brew 🛠️ =========="
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    echo "export PATH=/opt/homebrew/bin:$PATH" >> ~/.bash_profile && source ~/.bash_profile
     echo "========== Successfully Installed Brew 🛠️ =========="
 fi
 
