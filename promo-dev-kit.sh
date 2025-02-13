@@ -3,7 +3,7 @@
 # request admin permissions
 echo "This script requires admin privileges. Trying to gain root permissions..."
 # set admin credentials temporary
-sudo echo
+sudo su -c "echo 'Admin permissions granted'"
 
 is_kit_installed() {
     if command -v $1 >/dev/null 2>&1; then
@@ -33,6 +33,7 @@ fi
 if ! is_kit_installed "go" ; then
     echo "========== Installing Go 1.20 🔗 =========="
     brew install go@1.20
+    echo 'export PATH="$(brew --prefix golang)/bin:$PATH"' >> ~/.bash_profile && source ~/.bash_profile
 
     # set GOPRIVATE
     go env -w GOPRIVATE=github.com/tokopedia
@@ -47,6 +48,7 @@ fi
 if ! is_kit_installed "make" ; then
     echo "========== Installing Make 🔌 =========="
     brew install make
+    echo 'export PATH="$(brew --prefix make)/libexec/gnubin:$PATH"' >> ~/.bash_profile && source ~/.bash_profile
     echo "========== Successfully Installed Make 🔌 =========="
 fi
 
@@ -55,6 +57,9 @@ if ! is_kit_installed "gcloud" ; then
     echo "========== Installing Gcloud 🚀 =========="
     curl https://sdk.cloud.google.com | bash
     exec -l $SHELL
+    echo 'source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"' >> ~/.bash_profile
+    echo 'source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"' >> ~/.bash_profile
+    source ~/.bash_profile
     echo "========== Successfully Installed Gcloud 🚀 =========="
 fi
 
@@ -88,6 +93,7 @@ fi
 if ! is_kit_installed "nsqd" ; then
     echo "========== Installing NSQ 📨 =========="
     brew install nsq
+    echo 'export PATH="$(brew --prefix nsq)/bin:$PATH"' >> ~/.bash_profile && source ~/.bash_profile
     echo "========== Successfully Installed NSQ 📨 =========="
 fi
 
@@ -96,6 +102,7 @@ if ! is_kit_installed "redis-server" ; then
     echo "========== Installing Redis 📦 =========="
     brew install redis
     brew services start redis
+    echo "export PATH="$(brew --prefix redis)/bin:$PATH"" >> ~/.bash_profile && source ~/.bash_profile
     echo "========== Successfully Installed Redis 📦 =========="
 fi
 
